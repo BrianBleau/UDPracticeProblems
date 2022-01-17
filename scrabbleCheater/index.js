@@ -1,88 +1,126 @@
 const fs = require("fs");
 const scrabbleWords = fs.readFileSync("sowpods.txt").toString().split("\r\n");
 const letterScores = {
-  a: 1,
-  b: 3,
-  c: 3,
-  d: 2,
-  e: 1,
-  f: 4,
-  g: 2,
-  h: 4,
-  i: 1,
-  j: 8,
-  k: 5,
-  l: 1,
-  m: 3,
-  n: 1,
-  o: 1,
-  p: 3,
-  q: 10,
-  r: 1,
-  s: 1,
-  t: 1,
-  u: 1,
-  v: 4,
-  w: 4,
-  x: 8,
-  y: 4,
-  z: 10,
+  A: 1,
+  B: 3,
+  C: 3,
+  D: 2,
+  E: 1,
+  F: 4,
+  G: 2,
+  H: 4,
+  I: 1,
+  J: 8,
+  K: 5,
+  L: 1,
+  M: 3,
+  N: 1,
+  O: 1,
+  P: 3,
+  Q: 10,
+  R: 1,
+  S: 1,
+  T: 1,
+  U: 1,
+  V: 4,
+  W: 4,
+  X: 8,
+  Y: 4,
+  Z: 10,
 };
 
-const permutations = [];
-const findPermutations = function (string) {
-  const possComb = [];
-  if (string.length < 2) {
-    return string;
-  }
-  for (let i = 0; i < string.length; i++) {
-    let char = string[i];
-    if (string.indexOf(char) != i) continue;
-    possComb.push(char);
-    let rest = string.slice(0, i) + string.slice(i + 1, string.length);
-    for (perm of findPermutations(rest)) {
-      possComb.push(char + perm);
-    }
-  }
-  for (el of possComb) {
-    if (!permutations.includes(el)) permutations.push(el);
-  }
-  return possComb;
-};
+// const permutations = [];
+// const findPermutations = function (string) {
+//   const possComb = [];
+//   if (string.length < 2) {
+//     return string;
+//   }
+//   for (let i = 0; i < string.length; i++) {
+//     let char = string[i];
+//     if (string.indexOf(char) != i) continue;
+//     possComb.push(char);
+//     let rest = string.slice(0, i) + string.slice(i + 1, string.length);
+//     for (perm of findPermutations(rest)) {
+//       possComb.push(char + perm);
+//     }
+//   }
+//   for (el of possComb) {
+//     if (!permutations.includes(el)) permutations.push(el);
+//   }
+//   return possComb;
+// };
 
-const legalWords = [];
-const cheat = function (input) {
-  const final = [];
-  findPermutations(input);
-  for (perm of permutations) {
-    for (word of scrabbleWords) {
-      if (perm.toUpperCase() === word) {
-        legalWords.push(perm);
+// const legalWords = [];
+// const cheat = function (input) {
+//   const final = [];
+//   findPermutations(input);
+//   for (perm of permutations) {
+//     for (word of scrabbleWords) {
+//       if (perm.toUpperCase() === word) {
+//         legalWords.push(perm);
+//       }
+//     }
+//   }
+//   for (word of legalWords) {
+//     let wordArr = word.split("");
+//     let sum = 0;
+//     for (let i = 0; i < wordArr.length; i++) {
+//       sum += letterScores[wordArr[i]];
+//     }
+//     let obj = {
+//       legalWord: word,
+//       score: sum,
+//     };
+//     final.push(obj);
+//   }
+//   let high = 0;
+//   for (let i = 0; i < final.length; i++) {
+//     if (final[i].score > high) high = final[i].score;
+//   }
+//   while (high > 0) {
+//     for (word of final) {
+//       if (high === word.score) console.log(`${word.legalWord} ${word.score}`);
+//     }
+//     high--;
+//   }
+// };
+
+// cheat('abcd')
+
+cheat = function (input) {
+  let finalWords = [];
+  for(word of scrabbleWords){
+    let foundWord = '';
+    inputArray = input.toUpperCase().split('');
+    for(letter of word){
+      index = inputArray.indexOf(letter);
+      if(index === -1){
+        break;
+      } else {
+        foundWord += inputArray.splice(index, 1);
+        if(foundWord === word){
+          finalWords.push(foundWord);
+        }
       }
     }
   }
-  for (word of legalWords) {
-    let wordArr = word.split("");
+  let solution = [];
+  for(word of finalWords){
     let sum = 0;
-    for (let i = 0; i < wordArr.length; i++) {
-      sum += letterScores[wordArr[i]];
+    let wordArray = word.split('');
+    for(let i = 0; i < wordArray.length; i++){
+      sum += letterScores[wordArray[i]];
+      let obj = {
+        word: word,
+        score: sum
+      }
+      solution.push(obj);
     }
-    let obj = {
-      legalWord: word,
-      score: sum,
-    };
-    final.push(obj);
   }
-  let high = 0;
-  for (let i = 0; i < final.length; i++) {
-    if (final[i].score > high) high = final[i].score;
-  }
-  while (high > 0) {
-    for (word of final) {
-      if (high === word.score) console.log(`${word.legalWord} ${word.score}`);
-    }
-    high--;
-  }
-};
+  sorted = solution.sort((a, b) => {
+    return b.score - a.score;
+  })
+  console.log(sorted);
+}
 
-cheat('abcd')
+cheat('SPCQEIU');
