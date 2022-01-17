@@ -1,5 +1,5 @@
 const fs = require("fs");
-const scrabbleWords = fs.readFileSync("sowpods.txt").toString().split("\n");
+const scrabbleWords = fs.readFileSync("sowpods.txt").toString().split("\r\n");
 const letterScores = {
   a: 1,
   b: 3,
@@ -40,7 +40,6 @@ const findPermutations = function (string) {
     if (string.indexOf(char) != i) continue;
     possComb.push(char);
     let rest = string.slice(0, i) + string.slice(i + 1, string.length);
-    console.log(rest);
     for (perm of findPermutations(rest)) {
       possComb.push(char + perm);
     }
@@ -85,4 +84,5 @@ const cheat = function (input) {
     high--;
   }
 };
-cheat("abca");
+
+cheat('abcd')
