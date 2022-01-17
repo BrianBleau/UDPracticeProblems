@@ -94,9 +94,13 @@ cheat = function (input) {
     inputArray = input.toUpperCase().split('');
     for(letter of word){
       index = inputArray.indexOf(letter);
-      //will be adding the check for wild below
-      if(index === -1){
+      //added wild in elif condition 
+      if(index === -1 && !inputArray.includes('_')){
         break;
+      } else if (index === -1 && inputArray.includes('_')){
+        let index_ = inputArray.indexOf('_');
+        foundWord += letter;
+        inputArray.splice(index_, 1);
       } else {
         foundWord += inputArray.splice(index, 1);
         if(foundWord === word){
@@ -126,4 +130,4 @@ cheat = function (input) {
   console.log(sorted);
 }
 
-cheat('ABCDEFG');
+cheat('AB_');
