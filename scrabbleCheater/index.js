@@ -115,7 +115,10 @@ cheat = function (input) {
     let obj;
     let wordArray = word.split('');
     for(let i = 0; i < wordArray.length; i++){
-      sum += letterScores[wordArray[i]];
+      //check for wild scoring
+      if(input.toUpperCase().split('').includes(wordArray[i])){
+        sum += letterScores[wordArray[i]];
+      }
       obj = {
         word: word,
         score: sum
@@ -130,4 +133,4 @@ cheat = function (input) {
   console.log(sorted);
 }
 
-cheat('AB_');
+cheat('abc_');
