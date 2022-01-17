@@ -94,6 +94,7 @@ cheat = function (input) {
     inputArray = input.toUpperCase().split('');
     for(letter of word){
       index = inputArray.indexOf(letter);
+      //will be adding the check for wild below
       if(index === -1){
         break;
       } else {
@@ -107,20 +108,22 @@ cheat = function (input) {
   let solution = [];
   for(word of finalWords){
     let sum = 0;
+    let obj;
     let wordArray = word.split('');
     for(let i = 0; i < wordArray.length; i++){
       sum += letterScores[wordArray[i]];
-      let obj = {
+      obj = {
         word: word,
         score: sum
       }
-      solution.push(obj);
     }
+    solution.push(obj);
   }
   sorted = solution.sort((a, b) => {
     return b.score - a.score;
   })
+  
   console.log(sorted);
 }
 
-cheat('SPCQEIU');
+cheat('ABCDEFG');
