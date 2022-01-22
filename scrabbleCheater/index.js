@@ -89,48 +89,69 @@ const letterScores = {
 
 cheat = function (input) {
   let finalWords = [];
-  for(word of scrabbleWords){
-    let foundWord = '';
-    inputArray = input.toUpperCase().split('');
-    for(letter of word){
+  for (word of scrabbleWords) {
+    let foundWord = "";
+    inputArray = input.toUpperCase().split("");
+    for (letter of word) {
       index = inputArray.indexOf(letter);
-      //added wild in elif condition 
-      if(index === -1 && !inputArray.includes('_')){
+      //added wild in elif condition
+      if (index === -1 && !inputArray.includes("_")) {
         break;
-      } else if (index === -1 && inputArray.includes('_')){
-        let index_ = inputArray.indexOf('_');
+      } else if (index === -1 && inputArray.includes("_")) {
+        let index_ = inputArray.indexOf("_");
         foundWord += letter;
         inputArray.splice(index_, 1);
       } else {
         foundWord += inputArray.splice(index, 1);
-        if(foundWord === word){
+        if (foundWord === word) {
           finalWords.push(foundWord);
         }
       }
     }
   }
   let solution = [];
-  for(word of finalWords){
+  for (word of finalWords) {
     let sum = 0;
     let obj;
-    let wordArray = word.split('');
-    for(let i = 0; i < wordArray.length; i++){
+    let wordArray = word.split("");
+    for (let i = 0; i < wordArray.length; i++) {
       //check for wild scoring
-      if(input.toUpperCase().split('').includes(wordArray[i])){
+      if (input.toUpperCase().split("").includes(wordArray[i])) {
         sum += letterScores[wordArray[i]];
       }
       obj = {
         word: word,
-        score: sum
-      }
+        score: sum,
+      };
     }
     solution.push(obj);
   }
   sorted = solution.sort((a, b) => {
     return b.score - a.score;
-  })
-  
-  console.log(sorted);
-}
+  });
 
-cheat('abc_');
+  console.log(sorted);
+};
+
+//takes word as input and return the found word or not found
+const binarySearch = function (input) {
+  input = input.toUpperCase();
+  let wordBank = scrabbleWords;
+  let low = 0;
+  let high = wordBank.length - 1;
+  let mid = Math.floor(wordBank.length / 2);
+
+  while (input != wordBank[mid] && low < high) {
+    if (input < wordBank[mid]) {
+      high = mid - 1;
+    } else if (input > wordBank[mid]) {
+      low = mid + 1;
+    }
+    mid = Math.floor((low + high) / 2);
+  }
+  wordBank[mid] == input
+    ? console.log(wordBank[mid])
+    : console.log("Not Found");
+};
+binarySearch("she");
+//cheat('abc_');
