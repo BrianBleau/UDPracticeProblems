@@ -29,7 +29,7 @@ const letterScores = {
   Z: 10,
 };
 
-// const permutations = [];
+// const permutations = []; 
 // const findPermutations = function (string) {
 //   const possComb = [];
 //   if (string.length < 2) {
@@ -133,4 +133,5 @@ cheat = function (input) {
   console.log(sorted);
 }
 
-cheat('abc_');
+cheat('ZQQZZAEZZUDZZQQZ');
+console.log(scrabbleWords.length) 
