@@ -1,5 +1,6 @@
-input = "1 3 4 * + 2 -"
-
+input = ""
+// What edge cases Div by zero Empty stacks non int chars Empty string
+//Exp operator Variables 
 const postfixCalc = function ( input ) {
     let inpArr = input.split(" ");
     let stack = [];

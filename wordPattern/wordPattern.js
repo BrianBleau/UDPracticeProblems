@@ -25,49 +25,15 @@ const isPattern = function( input, pattern ) {
     return true;
 }
 
-
-// const arrPerm = function (arr, ind = 1) {
-//     for ( let i = ind; i < arr.length; i++ ) {
-//         if (isPattern(arr, input) == true) {
-//             console.log('found', arr);
-//             return true;
-//         }
-//         while ( arr[i].length >= 2 ) {
-//             let newArray = arr;
-//             newArray[i - 1] += newArray[i][0];
-//             newArray[i] =  newArray[i].substring(1, newArray[i].length);
-//             arrPerm(newArray, i);
-//             arrPerm(arr, i)
-//         }
-//     }
-//     console.log('none found')
-// }
-
-// const isPatternTwo = function (input, pattern) {
-//     let patternArray = [];
-//     patternArray.length = pattern.length;
-//     for ( let i = 0; i < patternArray.length; i++ ) {
-//         if ( i == patternArray.length - 1 ) {
-//             patternArray[i] = input.substring(i, input.length)
-//         } else patternArray[i] = (input.substring(i, i + 1))
-//     }
-//     arrPerm(patternArray);   
-// }
-
-//isPatternTwo(input, pattern);  
-// entry point = main function,  aux function = recsursive part 
-// geddeg 
-//
-
-let input = 'bluegreengreenblue';
-let pattern = 'abba';
-
+let input = 'redgreenblueredgreenbluesdfgsdfsdfsdfsdfsdfssdfsfsdf';
+let pattern = 'abcabcasdfsdfsfs';
+let count = 0;
 //part 2
 const auxSearch = function (strMap, pattMap, str, strInd, patt, pattInd) {
+    count++;
 
-    // Use both indices to break recursion
+    // Use both indices to break recursion If we get back to the top and are at the end of both indices, we found our match
     if ( pattInd == patt.length && strInd == str.length ) {
-        console.log('should be true');
         return true;
     }
     //If the above misses and either evalute to true, we've reached the end 
@@ -109,3 +75,4 @@ const search = function (string, pattern) {
 }
 
 console.log(search(input, pattern))
+console.log(count)
